@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Login Sistema</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+			<h:panelGrid columns="2" cellpadding="5" id="LoginSGA">
+				<h:outputLabel for="username" value="Usuario:" />
+				<p:inputText id="username" value="#{loginBean.username}" required="true" label="Usuario" />
+
+				<h:outputLabel for="password" value="Clave:" />
+				<p:inputText id="password" type="password" value="#{loginBean.password}" required="true" label="Clave" />
+
+				<f:facet name="footer">
+					<p:commandButton value="Login" update="LoginSGA, growl" action="#{loginBean.autenticar()}" />
+				</f:facet>
+			</h:panelGrid>
+	</h:form>
+</h:body>
+
+
+</html>
