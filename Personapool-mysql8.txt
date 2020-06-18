@@ -1,0 +1,9 @@
+user=root
+password=admin
+databaseName=test
+serverName=localhost
+datasourceName=com.mysql.cj.jdbc.MysqlDataSource
+portNumber=3306
+useSSL=false
+useTimezone=true
+serverTimezone=UTC
