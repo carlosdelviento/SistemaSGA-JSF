@@ -14,22 +14,7 @@
   PATH="/persona/listarPersonas.xhtml" SHAPE="552,464,50,25" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#persona#listarPersonas.xhtml:0" NAME="item"
    PATH="/persona/listarPersonas.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="index::#index.xhtml" NAME="output"
-    PATH="/index.xhtml"
-    SHAPE="601,496,616,496,616,408,536,408,536,328,543,328"
-    TARGET="rules:#index.xhtml" TITLE="index" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
- </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
-  SHAPE="544,320,50,25" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:#index.xhtml:0" NAME="item"
-   PATH="/index.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT
-    ID="listarPersonas::#persona#listarPersonas.xhtml" NAME="output"
-    PATH="/persona/listarPersonas.xhtml"
-    SHAPE="593,352,688,352,688,432,536,432,536,472,551,472"
-    TARGET="rules:#persona#listarPersonas.xhtml" TITLE="listarPersonas" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="logout::#login.xhtml" NAME="output1"
+   <PROCESS-ITEM-OUTPUT ID="logout::#login.xhtml" NAME="output"
     PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="logout" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>

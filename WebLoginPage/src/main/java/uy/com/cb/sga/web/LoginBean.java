@@ -57,9 +57,9 @@ public class LoginBean implements Serializable {
 
 		if (usuarioAutenticado != null) {
 			if (usuarioAutenticado.getPassword().equals(password)) {
-				//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Bienvenido", username));
-				RequestContext context = RequestContext.getCurrentInstance();
-				context.execute("swal('Login success','Bienvenido 'username,'success')");
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Bienvenido", username));
+				//RequestContext context = RequestContext.getCurrentInstance();
+				//context.execute("swal('Login success','Bienvenido 'username,'success')");
 				return "ingresar";
 			}
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"La clave no corresponde", password));
