@@ -75,11 +75,11 @@
 					Listado de Personas
 				</f:facet>
 	
-				<p:column headerText="Id">
+				<p:column headerText="Id" sortBy="#{persona.idPersona}">
 					<h:outputText value="#{persona.idPersona}" />
 				</p:column>
 	
-				<p:column headerText="Nombre" filterBy="#{persona.nombre}" footerText="contains" filterMatchMode="contains">
+				<p:column headerText="Nombre" sortBy="#{persona.nombre}" filterBy="#{persona.nombre}" footerText="contains" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.nombre}" />
@@ -90,7 +90,7 @@
 					</p:cellEditor>
 				</p:column>
 	
-				<p:column headerText="Apellido" filterBy="#{persona.apellido}" footerText="contains" filterMatchMode="contains">
+				<p:column headerText="Apellido" sortBy="#{persona.apellido}" filterBy="#{persona.apellido}" footerText="contains" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.apellido}" />
@@ -101,7 +101,7 @@
 					</p:cellEditor>
 				</p:column>
 	
-				<p:column headerText="Email" filterBy="#{persona.email}" footerText="contains" filterMatchMode="contains">
+				<p:column headerText="Email" sortBy="#{persona.email}" filterBy="#{persona.email}" footerText="contains" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.email}" />
@@ -112,7 +112,7 @@
 					</p:cellEditor>
 				</p:column>
 	
-				<p:column headerText="Telefono" filterBy="#{persona.telefono}" footerText="contains" filterMatchMode="contains">
+				<p:column headerText="Telefono" sortBy="#{persona.telefono}" filterBy="#{persona.telefono}" footerText="contains" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.telefono}" />
@@ -122,7 +122,13 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-	
+
+				<p:column headerText="Fecha" sortBy="#{persona.fecha}">
+					<h:outputText value="#{persona.fecha}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
 				<p:column headerText="Opciones" style="width: 50px">
 					<p:rowEditor />
 				</p:column>
@@ -144,6 +150,7 @@
 		<h:form id="dialogForm">
 			<p:outputPanel id="personaDetail" style="text-align: center;">
 				<p:panelGrid id="display" columns="4" columnClasses="label,value">
+				
 					<h:outputText for="nombre" value="Nombre" />
 					<h:inputText style="#{ component.valid ? 'border-color:red;' : 'border-color:red;'}" value="#{personaBean.personaSeleccionada.nombre}" label="Nombre" required="true">
 						<f:validateLength minimum="2" />
@@ -179,20 +186,23 @@
 			<p:outputPanel id="personaDetail" style="text-align:center;">
 				<p:panelGrid id="display" columns="2" rendered="#{not empty personaBean.personaSeleccionada}" columnClasses="label,value">
 					<f:facet name="header">
-						<p:graphicImage library="images" name="ajaxloading.gif" />
+						<p:graphicImage library="images" name="user.png" />
 					</f:facet>
 					
-					<h:outputText value="Nombre" />
-					<h:outputText value="#{personaBean.personaSeleccionada.nombre}" />
+					<h:outputText for="Id" value="Id" />
+					<h:outputText value="#{persona.idPersona}" />
+					
+					<h:outputText for="nombre" value="Nombre" />
+					<h:outputText value="#{persona.nombre}" />
 
-					<h:outputText value="Apellido" />
-					<h:outputText value="#{personaBean.personaSeleccionada.apellido}" />
+					<h:outputText for="apellido" value="Apellido" />
+					<h:outputText value="#{persona.apellido}" />
 
-					<h:outputText value="Email" />
-					<h:outputText value="#{personaBean.personaSeleccionada.email}" />
+					<h:outputText for="email" value="Email" />
+					<h:outputText value="#{persona.email}" />
 
 					<h:outputText for="telefono" value="Telefono" />
-					<h:outputText value="#{personaBean.personaSeleccionada.telefono}" />
+					<h:outputText value="#{persona.telefono}" />
 				</p:panelGrid>
 			</p:outputPanel>
 		</h:form>

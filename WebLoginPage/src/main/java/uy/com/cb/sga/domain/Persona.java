@@ -1,6 +1,7 @@
 package uy.com.cb.sga.domain;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -12,7 +13,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Persona.findByNombre", query = "SELECT p FROM Persona p WHERE p.nombre = :nombre"),
     @NamedQuery(name = "Persona.findByApellido", query = "SELECT p FROM Persona p WHERE p.apellido = :apellido"),
     @NamedQuery(name = "Persona.findByEmail", query = "SELECT p FROM Persona p WHERE p.email = :email"),
-    @NamedQuery(name = "Persona.findByTelefono", query = "SELECT p FROM Persona p WHERE p.telefono = :telefono")})
+    @NamedQuery(name = "Persona.findByTelefono", query = "SELECT p FROM Persona p WHERE p.telefono = :telefono"),
+    @NamedQuery(name = "Persona.findByFecha", query = "SELECT p FROM Persona p WHERE p.fecha = :fecha")})
 
 public class Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,22 +33,22 @@ public class Persona implements Serializable {
     private String email;
     @Size(max = 45)
     private String telefono;
+    
+    private Timestamp fecha;
 
 	@OneToMany(mappedBy = "persona" , cascade = CascadeType.ALL)
 	private List<Usuario> usuarioList;
 
 	public Persona() {
 	}
-
 	
-	
-	public Persona(String nombre,String apellido,String email,String telefono) {
+	public Persona(String nombre,String apellido,String email,String telefono, Timestamp fecha) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.telefono = telefono;
+		this.fecha = fecha;
 	}
-
 
 	public Persona(Integer idPersona) {
         this.idPersona = idPersona;
@@ -99,6 +101,14 @@ public class Persona implements Serializable {
 	public void setUsuarioList(List<Usuario> usuarioList) {
         this.usuarioList = usuarioList;
     }
+	
+	public Timestamp getFecha() {
+		return fecha;
+	}
+	
+	public void setFecha(Timestamp fecha) {
+		this.fecha = fecha;
+	}
 
 	@Override
     public int hashCode() {
@@ -122,7 +132,6 @@ public class Persona implements Serializable {
 	@Override
 	public String toString() {
 		return "Persona [idPersona=" + idPersona + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email
-				+ ", telefono=" + telefono + "]";
+				+ ", telefono=" + telefono + ", fecha" + fecha + "]";
 	}
-	
 }

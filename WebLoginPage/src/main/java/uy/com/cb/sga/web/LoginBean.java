@@ -71,7 +71,6 @@ public class LoginBean implements Serializable {
 	
 	public String logout(){
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		
 		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 		session.invalidate();
 		return "logout";
