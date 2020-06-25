@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -7,87 +7,40 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Login Sistema</title>
-	<!-- Compiled and minified CSS -->
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
-	<!--Import jquery before materialize.js-->
-	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<!-- Compiled and minified JavaScript -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<h:outputStylesheet library="css" name="sweetalert.css" />
-	<h:outputScript library="js" name="sweetalert.min.js" />
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js">
+	</script>
 	<!-- Personalize Css -->
 	<h:outputStylesheet library="css" name="login.css" />
+	<h:outputStylesheet library="css" name="cssLayout.css" />
 
 </h:head>
-<h:body styleClass="cyan lighten-5">
-	<!-- <div class="valign-wrapper" id="login-page">
-		<div class="container">
-			<div class="center-align">
-				<div class="row">
-					<div class="col s6 offset-s3">
-						<div class="card">
-							<div class="card-content">
-									<div class="left-align">
-									<h:form id="login-form">
-										<p:growl id="growl" autoUpdate="true" sticky="true" showDetail="true" life="3000" />
-										<div class="row">
-											<div class="col s12 input-field">
-												<h:inputText id="username" value="#{loginBean.username}" required="true" requiredMessage="Usuario requerido:" label="Usuario" />
-												<h:outputLabel for="username" value="Usuario:" />
-											</div>
-											<div class="col s12 input-field">
-												<h:inputSecret id="password" type="password" value="#{loginBean.password}" required="true" requiredMessage="Clave requerida:" label="Clave" />
-												<h:outputLabel for="password" value="Clave:" />
-											</div>
-											<div class="col s12 input-field">
-												<h:commandLink value="Login" styleClass="btn btn-large" update="LoginSGA, growl" action="#{loginBean.autenticar()}" />
-											</div>
-										</div>
-									</h:form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>-->
-	
+<h:body>
 	<div class="container">
-		<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 		<h:form id="formLogin">
-			<p:panel header="Ingresar Usuario y Clave">
-			<h:panelGrid columns="2" cellpadding="5">
-	            <h:outputLabel for="username" value="Username:" />
-	            <p:inputText id="username" value="#{loginBean.username}" required="true" label="username" />
-	             
-	            <h:outputLabel for="password" value="Password:" />
-	            <p:password id="password" value="#{loginBean.password}" required="true" label="password" />
-             
-	            <f:facet name="footer">
-	                <p:commandButton value="Login" update="growl" action="#{loginBean.autenticar()}" icon="icon-login" oncomplete="handleLoginRequest(xhr, status, args)" />
-	            </f:facet>  
-        	</h:panelGrid>
+			<p:growl id="growl" showDetail="true" life="3000" />
+			<p:panel header="Ingrese Usuario y Clave">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel for="username" value="Username:" />
+					<p:inputText id="username" value="#{loginBean.username}" required="true" label="Usuario" />
+
+					<h:outputLabel for="password" value="Password:" />
+					<p:password id="password" value="#{loginBean.password}" required="true" label="Clave" />
+
+					<f:facet name="footer">
+						<p:commandButton id="loginButton" value="Login" update="growl" action="#{loginBean.autenticar()}" icon="pi pi-sign-in" oncomplete="handleLoginRequest(xhr, status, args)" />
+					</f:facet>
+				</h:panelGrid>
 			</p:panel>
 		</h:form>
 	</div>
-	<!-- <script type="text/javascript">
-		$(document).on("ready",function(){
-			$('#login-page').css({'height': window.innerHeight + 'px'});
-		});
-	</script> -->
-	
 	<script type="text/javascript">
 	    function handleLoginRequest(xhr, status, args) {
 	        if(args.validationFailed || !args.loggedIn) {
-	            PF('dlg').jq.effect("shake", {times:5}, 100);
+	            PF('#formLogin').jq.effect("shake", {times:5}, 100);
 	        }
 	        else {
-	            PF('dlg').hide();
-	            $('#loginLink').fadeOut();
+	            PF('#formLogin').hide();
+	            $('#formLogin').fadeOut();
 	        }
 	    }
 	</script>

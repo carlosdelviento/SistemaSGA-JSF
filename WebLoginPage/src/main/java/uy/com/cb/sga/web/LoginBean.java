@@ -7,6 +7,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import uy.com.cb.sga.datos.UsuarioDao;
 import uy.com.cb.sga.domain.Usuario;
 
@@ -58,8 +59,6 @@ public class LoginBean implements Serializable {
 		if (usuarioAutenticado != null) {
 			if (usuarioAutenticado.getPassword().equals(password)) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Bienvenido", username));
-				//RequestContext context = RequestContext.getCurrentInstance();
-				//context.execute("swal('Login success','Bienvenido 'username,'success')");
 				return "ingresar";
 			}
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"La clave no corresponde", password));
@@ -68,5 +67,13 @@ public class LoginBean implements Serializable {
 
 		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_FATAL, "El usuario no existe", "El usuario no existe"));
 		return null;
+	}
+	
+	public String logout(){
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+		session.invalidate();
+		return "logout";
 	}
 }

@@ -10,6 +10,6 @@ body{
 	font-size: 85%;
 }
 
-.ui-state-default .icon-login{
-	background-image: url(../images/icons/login.png);
-}
+/* .ui-state-default .icon-login{
+	background-image: url(images/icons/login.png);
+} */

@@ -8,7 +8,7 @@ public interface UsuarioDao {
     
     public Usuario findUsuarioById(Usuario usuario);
     
-    //public Usuario findUsuarioByUsername(Usuario usuario);
+    public Usuario findUsuarioByUsername(Usuario usuario);
     
     public Usuario findUsuarioByUsername(String username);
     

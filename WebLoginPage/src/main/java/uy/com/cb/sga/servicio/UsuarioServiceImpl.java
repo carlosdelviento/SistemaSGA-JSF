@@ -22,11 +22,10 @@ public abstract class UsuarioServiceImpl implements UsuarioServiceRemote, Usuari
         return usuarioDao.findUsuarioById(usuario);
     }
 
-    
-    /*@Override
+    @Override
     public Usuario encontrarUsuarioPorUsername(Usuario usuario) {
         return usuarioDao.findUsuarioByUsername(usuario);
-    }*/
+    }
     
     public Usuario encontrarUsuarioPorUsername(String username) {
         return usuarioDao.findUsuarioByUsername(username);

@@ -7,61 +7,58 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Listado de Personas</title>
+	<!-- Personalize Css -->
+	<h:outputStylesheet library="css" name="cssLayout.css" />
 </h:head>
 <h:body>
-
+	
+	<!-- Header -->
 	<div id="top" class="ui-widget-header ui-corner-all">
 		<ui:insert name="top">Top</ui:insert>
 	</div>
+	<!-- Fin Header -->
 	
+	<!-- Menubar -->
 	<div id="menu">
 		<h:form>  	 
 		    <p:menubar>
-		        <p:submenu label="File" icon="pi pi-file">
-		            <p:submenu label="New" icon="pi pi-briefcase">
-		                <p:menuitem value="Project" url="#" />
-		                <p:menuitem value="Other" url="#" />
+		        <p:submenu label="Archivo" icon="pi pi-file">
+		            <p:submenu label="Nuevo" icon="pi pi-briefcase">
+		                <p:menuitem value="Proyecto" url="#" />
+		                <p:menuitem value="Otros" url="#" />
 		            </p:submenu>
-		            <p:menuitem value="Open" url="#" />
+		            <p:menuitem value="Abrir" url="#" />
 		            <p:separator />
-		            <p:menuitem value="Quit" url="#" />
+		            <p:menuitem value="Salir" url="#" />
 		        </p:submenu>
 		 
-		        <p:submenu label="Edit" icon="pi pi-pencil">
-		            <p:menuitem value="Undo" url="#" icon="pi pi-angle-double-left" />
-		            <p:menuitem value="Redo" url="#" icon="pi pi-angle-double-right" />
+		        <p:submenu label="Editar" icon="pi pi-pencil">
+		            <p:menuitem value="Deshacer" url="#" icon="pi pi-angle-double-left" />
+		            <p:menuitem value="Rehacer" url="#" icon="pi pi-angle-double-right" />
 		        </p:submenu>
 		 
-		        <p:submenu label="Help" icon="pi pi-question">
-		            <p:menuitem value="Contents" url="#" />
-		            <p:submenu label="Search" icon="pi pi-search">
-		                <p:submenu label="Text">
+		        <p:submenu label="Ayuda" icon="pi pi-question">
+		            <p:menuitem value="Contenido" url="#" />
+		            <p:submenu label="Buscar" icon="pi pi-search">
+		                <p:submenu label="Texto">
 		                    <p:menuitem value="Workspace" url="#" />
 		                </p:submenu>
-		                <p:menuitem value="File" url="#" />
+		                <p:menuitem value="Archivo" url="#" />
 		            </p:submenu>
 		        </p:submenu>
 		 
-		        <p:submenu label="Actions" icon="pi pi-cog">
-		            <p:submenu label="Ajax" icon="pi pi-refresh">
-		                <p:menuitem value="Save" action="#{menuView.save}" icon="pi pi-save"/>
-		                <p:menuitem value="Update" action="#{menuView.update}" icon="pi pi-refresh"/>
-		            </p:submenu>
-		            <p:submenu label="Non-Ajax" icon="pi pi-clone">
-		                <p:menuitem value="Delete" action="#{menuView.delete}" icon="pi pi-times" ajax="false"/>
-		            </p:submenu>
+		        <p:submenu label="Acciones"  for="personasDataTable" icon="pi pi-cog">
+		                <p:menuitem value="Agregar" actionListener="#{personaBean.reiniciarPersonaSeleccionada}" update=":dialogForm" oncomplete="PF('personaDialog').show()" />
+		                <p:menuitem value="Borrar" actionListener="#{personaBean.eliminarPersona}" update="personasListForm:personasDataTable" icon="pi pi-times"/>
 		        </p:submenu>
-		 
-		        <p:menuitem value="Quit" url="http://www.primefaces.org" icon="pi pi-times" />
-		 
-		        <f:facet name="options">
-		            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-		            <p:commandButton type="button" value="Logout" icon="pi pi-home" />
-		        </f:facet>
+		        
+		        <p:menuitem value="Salir" icon="pi pi-times" action="#{loginBean.logout()}" />
 		    </p:menubar>
 		</h:form>
 	</div>
-
+	<!-- Fin Menubar -->
+	
+	<!-- DataTable -->
 	<div id="content" class="center_content">
 		<h:form id="personasListForm">
 			<p:growl id="messages" showDetail="true" />
@@ -125,14 +122,6 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-	
-				<f:facet name="footer">
-					<p:commandButton value="Salir" action="logout" />
-					<p:spacer height="5px" />
-					<p:commandButton value="Agregar"
-						actionListener="#{personaBean.reiniciarPersonaSeleccionada}"
-						update=":dialogForm" oncomplete="PF('personaDialog').show()" />
-				</f:facet>
 	
 				<p:column headerText="Opciones" style="width: 50px">
 					<p:rowEditor />
@@ -210,9 +199,13 @@
 	</p:dialog>
 	<!-- Fin Ver persona Menú -->
 	</div>
-		
+	<!-- Fin DataTable -->	
+	
+	<!-- Footer -->
 	<div id="bottom" class="ui-widget-header ui-corner-all">
-		<ui:insert name="bottom">&copy; 2020</ui:insert>
+		<ui:insert name="bottom"> 2020</ui:insert>
 	</div>
+	<!-- Fin Footer -->
+	
 </h:body>
 </html>
