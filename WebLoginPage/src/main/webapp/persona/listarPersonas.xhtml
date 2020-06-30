@@ -66,20 +66,31 @@
 	
 			<!-- Tabla Listar personas -->
 			<p:dataTable id="personasDataTable" value="#{personaBean.personas}"
-				var="persona" editable="true" rowKey="#{persona.idPersona}"
-				selection="#{personaBean.personaSeleccionada}" selectionMode="single"
-				paginator="true" rows="10" paginatorPosition="bottom"
+				stickyHeader="true" stickyTopAt=".layout-topbar" var="persona"
+				editable="true" rowKey="#{persona.idPersona}"
+				selection="#{personaBean.personaSeleccionada}"
+				selectionMode="single" paginator="true" rows="10"
+				paginatorPosition="bottom"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records">
 				<f:facet name="header">
 					Listado de Personas
 				</f:facet>
-	
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Buscar persona:" />
+						<p:inputText id="globalFilter" onkeyup="PF('persona').filter()" style="width:150px" placeholder="Ingrese un valor" />
+					</p:outputPanel>
+				</f:facet>
+
 				<p:column headerText="Id" sortBy="#{persona.idPersona}">
 					<h:outputText value="#{persona.idPersona}" />
 				</p:column>
-	
-				<p:column headerText="Nombre" sortBy="#{persona.nombre}" filterBy="#{persona.nombre}" footerText="contains" filterMatchMode="contains">
+
+				<p:column headerText="Nombre" sortBy="#{persona.nombre}"
+					filterBy="#{persona.nombre}" footerText="contains"
+					filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.nombre}" />
@@ -89,8 +100,10 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-	
-				<p:column headerText="Apellido" sortBy="#{persona.apellido}" filterBy="#{persona.apellido}" footerText="contains" filterMatchMode="contains">
+
+				<p:column headerText="Apellido" sortBy="#{persona.apellido}"
+					filterBy="#{persona.apellido}" footerText="contains"
+					filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.apellido}" />
@@ -100,8 +113,10 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-	
-				<p:column headerText="Email" sortBy="#{persona.email}" filterBy="#{persona.email}" footerText="contains" filterMatchMode="contains">
+
+				<p:column headerText="Email" sortBy="#{persona.email}"
+					filterBy="#{persona.email}" footerText="contains"
+					filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.email}" />
@@ -111,8 +126,10 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-	
-				<p:column headerText="Telefono" sortBy="#{persona.telefono}" filterBy="#{persona.telefono}" footerText="contains" filterMatchMode="contains">
+
+				<p:column headerText="Telefono" sortBy="#{persona.telefono}"
+					filterBy="#{persona.telefono}" footerText="contains"
+					filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.telefono}" />
@@ -125,16 +142,25 @@
 
 				<p:column headerText="Fecha" sortBy="#{persona.fecha}">
 					<h:outputText value="#{persona.fecha}">
-					<f:convertDateTime pattern="dd/MM/yyyy" />
+						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
+				</p:column>
+
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton update=":form:personaDetail"
+						oncomplete="PF('personaSeleccionada').show()" icon="pi pi-search"
+						title="Ver">
+						<f:setPropertyActionListener value="#{persona}"
+							target="#{personaBean.personaSeleccionada}" />
+					</p:commandButton>
 				</p:column>
 
 				<p:column headerText="Opciones" style="width: 50px">
 					<p:rowEditor />
 				</p:column>
-	
+
 				<p:ajax event="rowEdit" listener="#{personaBean.editListener}" />
-	
+
 			</p:dataTable>
 			<!-- Fin Listar Personas -->
 	
