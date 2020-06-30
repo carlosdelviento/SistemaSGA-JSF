@@ -102,3 +102,8 @@
 	width: 100%;
 	box-sizing: border-box;
 }
+
+/* Export Page Style */
+.ui-paginator a {
+	margin-right: 5px;
+}
