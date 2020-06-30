@@ -17,8 +17,8 @@
 <h:body>
 	<div class="container">
 		<h:form id="formLogin">
-			<p:growl id="growl" showDetail="true" life="3000" />
-			<p:panel header="Ingrese Usuario y Clave">
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+			<p:panel header="Ingrese Usuario y Clave" widgetVar="dlg">
 				<h:panelGrid columns="2" cellpadding="5">
 					<h:outputLabel for="username" value="Username:" />
 					<p:inputText id="username" value="#{loginBean.username}" required="true" label="Usuario" />
@@ -27,7 +27,7 @@
 					<p:password id="password" value="#{loginBean.password}" required="true" label="Clave" />
 
 					<f:facet name="footer">
-						<p:commandButton id="loginButton" value="Login" update="growl" action="#{loginBean.autenticar()}" icon="pi pi-sign-in" oncomplete="handleLoginRequest(xhr, status, args)" />
+						<p:commandButton id="loginButton" value="Login" update="growl" action="#{loginBean.autenticar()}" oncomplete="handleLoginRequest(xhr, status, args)" icon="pi pi-sign-in" />
 					</f:facet>
 				</h:panelGrid>
 			</p:panel>
@@ -36,10 +36,10 @@
 	<script type="text/javascript">
 	    function handleLoginRequest(xhr, status, args) {
 	        if(args.validationFailed || !args.loggedIn) {
-	            PF('#formLogin').jq.effect("shake", {times:5}, 100);
+	            PF('dlg').jq.effect("shake", {times:5}, 100);
 	        }
 	        else {
-	            PF('#formLogin').hide();
+	            PF('dlg').hide();
 	            $('#formLogin').fadeOut();
 	        }
 	    }

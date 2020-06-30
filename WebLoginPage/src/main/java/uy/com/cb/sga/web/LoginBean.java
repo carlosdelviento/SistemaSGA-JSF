@@ -8,6 +8,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+
+import org.primefaces.PrimeFaces;
+
 import uy.com.cb.sga.datos.UsuarioDao;
 import uy.com.cb.sga.domain.Usuario;
 
@@ -53,20 +56,26 @@ public class LoginBean implements Serializable {
 	}
 	
 	public String autenticar() {
+        boolean loggedIn = false;
 
 		usuarioAutenticado = usuDao.findUsuarioByUsername(username);
 
 		if (usuarioAutenticado != null) {
 			if (usuarioAutenticado.getPassword().equals(password)) {
+				loggedIn = true;
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Bienvenido", username));
 				return "ingresar";
 			}
+			loggedIn = false;
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"La clave no corresponde", password));
+			PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
 			return null;
 		}
-
+		loggedIn = false;
 		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_FATAL, "El usuario no existe", "El usuario no existe"));
+		PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
 		return null;
+		
 	}
 	
 	public String logout(){
