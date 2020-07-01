@@ -61,8 +61,8 @@
 	font-weight: bold;
 }
 
-.ui-datatable {
-	margin-bottom: 25px
+.ui-datatable table{
+	margin-bottom: 25px;
 }
 
 .ui-datatable .ui-datatable-footer {
@@ -81,8 +81,13 @@
 
 /* Filter styles */
 
-.ui-datatable .ui-datatable-header {
+.ui-outputpanel {
 	text-align: right !important;
+	vertical-align: baseline;
+}
+
+.ui-datatable .ui-datatable-header {
+	text-align: center !important;
 }
 
 .ui-button-text-only .ui-button-text {

@@ -9,6 +9,7 @@
 	<title>Listado de Personas</title>
 	<!-- Personalize Css -->
 	<h:outputStylesheet library="css" name="cssLayout.css" />
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
 </h:head>
 <h:body>
 	
@@ -29,7 +30,7 @@
 		            </p:submenu>
 		            <p:menuitem value="Abrir" url="#" />
 		            <p:separator />
-		            <p:menuitem value="Salir" url="#" />
+		            <p:menuitem value="Salir" action="#{loginBean.logout()}" />
 		        </p:submenu>
 		 
 		        <p:submenu label="Editar" icon="pi pi-pencil">
@@ -65,14 +66,19 @@
 			<p:messages />
 	
 			<!-- Tabla Listar personas -->
-			<p:dataTable id="personasDataTable" value="#{personaBean.personas}"
-				stickyHeader="true" stickyTopAt=".layout-topbar" var="persona"
-				editable="true" rowKey="#{persona.idPersona}"
+			<p:dataTable var="persona" value="#{personaBean.personas}"
+				widgetVar="personasDataTable1"
+				emptyMessage="No se encontró la persona"
+				filteredValue="#{dtFilterView.filteredpersonasDataTable1}"
+				id="personasDataTable" stickyHeader="false"
+				stickyTopAt=".layout-topbar" editable="true"
+				rowKey="#{persona.idPersona}"
 				selection="#{personaBean.personaSeleccionada}"
 				selectionMode="single" paginator="true" rows="10"
 				paginatorPosition="bottom"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
 				currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records">
+
 				<f:facet name="header">
 					Listado de Personas
 				</f:facet>
@@ -80,7 +86,9 @@
 				<f:facet name="header">
 					<p:outputPanel>
 						<h:outputText value="Buscar persona:" />
-						<p:inputText id="globalFilter" onkeyup="PF('persona').filter()" style="width:150px" placeholder="Ingrese un valor" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('personasDataTable1').filter()" style="width:150px"
+							placeholder="Ingrese un valor" />
 					</p:outputPanel>
 				</f:facet>
 
@@ -88,32 +96,40 @@
 					<div style="float: right; padding-top: 5px;">
 						<h:commandLink>
 							<p:graphicImage library="images" name="excel.png" width="24" />
-							<p:dataExporter type="xls" target="personasDataTable" fileName="persons" pageOnly="true" />
+							<p:dataExporter type="xls" target="personasDataTable"
+								fileName="persons" pageOnly="true" />
 						</h:commandLink>
 
 						<h:commandLink>
 							<p:graphicImage library="images" name="xlsx.png" width="24" />
-							<p:dataExporter type="xlsxstream" target="personasDataTable" fileName="persons" pageOnly="true" />
+							<p:dataExporter type="xlsxstream" target="personasDataTable"
+								fileName="persons" pageOnly="true" />
 						</h:commandLink>
 
 						<h:commandLink>|
 							<p:graphicImage library="images" name="pdf.png" width="24" />
-							<p:dataExporter type="pdf" target="personasDataTable" fileName="persons" pageOnly="true" />
+							<p:dataExporter type="pdf" target="personasDataTable"
+								fileName="persons" pageOnly="true" />
 						</h:commandLink>
 
 						<h:commandLink>
 							<p:graphicImage library="images" name="csv.png" width="24" />
-							<p:dataExporter type="csv" target="personasDataTable" fileName="persons" pageOnly="true" />
+							<p:dataExporter type="csv" target="personasDataTable"
+								fileName="persons" pageOnly="true" />
 						</h:commandLink>
 
 						<h:commandLink>
 							<p:graphicImage library="images" name="xml.png" width="24" />
-							<p:dataExporter type="xml" target="personasDataTable" fileName="persons" pageOnly="true" />
+							<p:dataExporter type="xml" target="personasDataTable"
+								fileName="persons" pageOnly="true" />
 						</h:commandLink>
 
 						<h:commandLink>
-							<p:graphicImage library="images" name="keyboardpencil.png" width="24" />
-							<p:dataExporter type="text" target="personasDataTable" fileName="persons" exporter="#{dataExporterView.textExporter}" pageOnly="true" />
+							<p:graphicImage library="images" name="keyboardpencil.png"
+								width="24" />
+							<p:dataExporter type="text" target="personasDataTable"
+								fileName="persons" exporter="#{dataExporterView.textExporter}"
+								pageOnly="true" />
 						</h:commandLink>
 					</div>
 				</f:facet>
@@ -122,7 +138,9 @@
 					<h:outputText value="#{persona.idPersona}" />
 				</p:column>
 
-				<p:column headerText="Nombre" sortBy="#{persona.nombre}" filterBy="#{persona.nombre}" footerText="contains" filterMatchMode="contains">
+				<p:column headerText="Nombre" sortBy="#{persona.nombre}"
+					filterBy="#{persona.nombre}" footerText="contains"
+					filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.nombre}" />
@@ -133,7 +151,9 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Apellido" sortBy="#{persona.apellido}" filterBy="#{persona.apellido}" footerText="contains" filterMatchMode="contains">
+				<p:column headerText="Apellido" sortBy="#{persona.apellido}"
+					filterBy="#{persona.apellido}" footerText="contains"
+					filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.apellido}" />
@@ -157,7 +177,9 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Telefono" sortBy="#{persona.telefono}" filterBy="#{persona.telefono}" footerText="contains" filterMatchMode="contains">
+				<p:column headerText="Telefono" sortBy="#{persona.telefono}"
+					filterBy="#{persona.telefono}" footerText="contains"
+					filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.telefono}" />
@@ -174,9 +196,12 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column style="width:32px;text-align: center">
-					<p:commandButton update=":form:personaDetail" oncomplete="PF('personaSeleccionada').show()" icon="pi pi-search" title="Ver">
-						<f:setPropertyActionListener value="#{persona}" target="#{personaBean.personaSeleccionada}" />
+				<p:column headerText="Ver" style="width:32px;text-align: center">
+					<p:commandButton update="personasListForm:personasDataTable"
+						oncomplete="PF('personaSeleccionada').show()" icon="pi pi-search"
+						title="Ver">
+						<f:setPropertyActionListener value="#{persona}"
+							target="#{personaBean.personaSeleccionada}" />
 					</p:commandButton>
 				</p:column>
 
