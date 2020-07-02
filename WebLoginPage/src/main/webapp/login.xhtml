@@ -18,16 +18,29 @@
 	<div class="container">
 		<h:form id="formLogin">
 			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-			<p:panel header="Ingrese Usuario y Clave" widgetVar="dlg">
+			<p:panel header="Login" widgetVar="dlg">
 				<h:panelGrid columns="2" cellpadding="5">
-					<h:outputLabel for="username" value="Username:" />
-					<p:inputText id="username" value="#{loginBean.username}" required="true" label="Usuario" />
+					<f:facet name="header">
+						<p:messages id="msgs"/>
+					</f:facet>
+					
+					<p:outputLabel for="username" value="Username:" />
+					<p:inputText id="username" value="#{loginBean.username}"
+						required="true" requiredMessage="Usuario válido requerido"
+						label="Usuario" />
+					<p:message for="username" display="icon" />
 
-					<h:outputLabel for="password" value="Password:" />
-					<p:password id="password" value="#{loginBean.password}" required="true" label="Clave" />
+					<p:outputLabel for="password" value="Password:" />
+					<p:password id="password" value="#{loginBean.password}"
+						required="true" requiredMessage="Clave válida requerida"
+						label="Clave" />
+					<p:message for="password" display="icon" />
 
 					<f:facet name="footer">
-						<p:commandButton id="loginButton" value="Login" update="growl" action="#{loginBean.autenticar()}" oncomplete="handleLoginRequest(xhr, status, args)" icon="pi pi-sign-in" />
+						<p:commandButton id="loginButton" value="Login" update="growl"
+							action="#{loginBean.autenticar()}"
+							oncomplete="handleLoginRequest(xhr, status, args)"
+							icon="pi pi-sign-in" />
 					</f:facet>
 				</h:panelGrid>
 			</p:panel>

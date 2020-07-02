@@ -9,7 +9,7 @@
 	<title>Listado de Personas</title>
 	<!-- Personalize Css -->
 	<h:outputStylesheet library="css" name="cssLayout.css" />
-	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+	<h:outputStylesheet library="primefaces" name="primeicons/primeicons.css" />
 </h:head>
 <h:body>
 	
@@ -68,7 +68,7 @@
 			<!-- Tabla Listar personas -->
 			<p:dataTable var="persona" value="#{personaBean.personas}"
 				widgetVar="personasDataTable1"
-				emptyMessage="No se encontró la persona"
+				emptyMessage="No se encontró la persona indicada"
 				filteredValue="#{dtFilterView.filteredpersonasDataTable1}"
 				id="personasDataTable" stickyHeader="false"
 				stickyTopAt=".layout-topbar" editable="true"
@@ -134,7 +134,8 @@
 					</div>
 				</f:facet>
 
-				<p:column headerText="Id" sortBy="#{persona.idPersona}">
+				<p:column headerText="Id" sortBy="#{persona.idPersona}"
+					footerText="contains" filterMatchMode="contains">
 					<h:outputText value="#{persona.idPersona}" />
 				</p:column>
 
@@ -215,8 +216,8 @@
 			<!-- Fin Listar Personas -->
 	
 			<p:contextMenu for="personasDataTable">
-				<p:menuitem value="Ver" update="personasListForm:personasDataTable" icon="ui-icon-view" oncomplete="PF('personaSeleccionada').show()" />
-				<p:menuitem value="Eliminar" update="personasListForm:personasDataTable" icon="ui-icon-close" actionListener="#{personaBean.eliminarPersona}" />
+				<p:menuitem value="Ver" update="personasListForm:personasDataTable" icon="pi pi-search" oncomplete="PF('personaSeleccionada').show()" />
+				<p:menuitem value="Eliminar" update="personasListForm:personasDataTable" icon="pi pi-times" actionListener="#{personaBean.eliminarPersona}" />
 			</p:contextMenu>
 
 	</h:form>
@@ -266,19 +267,19 @@
 					</f:facet>
 					
 					<h:outputText for="Id" value="Id" />
-					<h:outputText value="#{persona.idPersona}" />
+					<h:outputText value="#{personaBean.personaSeleccionada.idPersona}" />
 					
 					<h:outputText for="nombre" value="Nombre" />
-					<h:outputText value="#{persona.nombre}" />
+					<h:outputText value="#{personaBean.personaSeleccionada.nombre}" />
 
 					<h:outputText for="apellido" value="Apellido" />
-					<h:outputText value="#{persona.apellido}" />
+					<h:outputText value="#{personaBean.personaSeleccionada.apellido}" />
 
 					<h:outputText for="email" value="Email" />
-					<h:outputText value="#{persona.email}" />
+					<h:outputText value="#{personaBean.personaSeleccionada.email}" />
 
 					<h:outputText for="telefono" value="Telefono" />
-					<h:outputText value="#{persona.telefono}" />
+					<h:outputText value="#{personaBean.personaSeleccionada.telefono}" />
 				</p:panelGrid>
 			</p:outputPanel>
 		</h:form>
