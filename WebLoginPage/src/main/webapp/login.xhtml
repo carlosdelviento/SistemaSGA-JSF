@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -11,36 +11,24 @@
 	</script>
 	<!-- Personalize Css -->
 	<h:outputStylesheet library="css" name="login.css" />
-	<h:outputStylesheet library="css" name="cssLayout.css" />
 
 </h:head>
 <h:body>
 	<div class="container">
 		<h:form id="formLogin">
 			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-			<p:panel header="Login" widgetVar="dlg">
+			<p:panel header="Login" widgetVar="dlg" resizable="false">
 				<h:panelGrid columns="2" cellpadding="5">
-					<f:facet name="header">
-						<p:messages id="msgs"/>
-					</f:facet>
-					
-					<p:outputLabel for="username" value="Username:" />
-					<p:inputText id="username" value="#{loginBean.username}"
-						required="true" requiredMessage="Usuario válido requerido"
-						label="Usuario" />
+					<h:outputLabel for="username" value="Username:" />
+					<p:inputText style="width: 100%;" id="username" value="#{loginBean.username}" required="true" label="Usuario" />
 					<p:message for="username" display="icon" />
 
-					<p:outputLabel for="password" value="Password:" />
-					<p:password id="password" value="#{loginBean.password}"
-						required="true" requiredMessage="Clave válida requerida"
-						label="Clave" />
+					<h:outputLabel for="password" value="Password:" />
+					<p:password style="width: 100%;" id="password" value="#{loginBean.password}" required="true" label="Clave" />
 					<p:message for="password" display="icon" />
 
 					<f:facet name="footer">
-						<p:commandButton id="loginButton" value="Login" update="growl"
-							action="#{loginBean.autenticar()}"
-							oncomplete="handleLoginRequest(xhr, status, args)"
-							icon="pi pi-sign-in" />
+						<p:commandButton id="loginButton" value="Login" update="growl" action="#{loginBean.autenticar()}" oncomplete="handleLoginRequest(xhr, status, args)" icon="pi pi-sign-in" />
 					</f:facet>
 				</h:panelGrid>
 			</p:panel>

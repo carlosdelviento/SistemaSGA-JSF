@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -49,7 +49,7 @@
 		        </p:submenu>
 		 
 		        <p:submenu label="Acciones"  for="personasDataTable" icon="pi pi-cog">
-		                <p:menuitem value="Agregar" actionListener="#{personaBean.reiniciarPersonaSeleccionada}" update=":dialogForm" oncomplete="PF('personaDialog').show()" />
+		                <p:menuitem value="Agregar" actionListener="#{personaBean.agregarPersona}" update="personasListForm:personasDataTable" oncomplete="PF('personaDialog').show()" icon="pi pi-save" />
 		                <p:menuitem value="Borrar" actionListener="#{personaBean.eliminarPersona}" update="personasListForm:personasDataTable" icon="pi pi-times"/>
 		        </p:submenu>
 		        
@@ -67,16 +67,17 @@
 	
 			<!-- Tabla Listar personas -->
 			<p:dataTable var="persona" value="#{personaBean.personas}"
-				widgetVar="personasDataTable1"
+				widgetVar="personasDataTable1" multiViewState="true"
 				emptyMessage="No se encontró la persona indicada"
-				filteredValue="#{dtFilterView.filteredpersonasDataTable1}"
+				filteredValue="#{dtTableStateView.filteredPersons}"
 				id="personasDataTable" stickyHeader="false"
 				stickyTopAt=".layout-topbar" editable="true"
 				rowKey="#{persona.idPersona}"
-				selection="#{personaBean.personaSeleccionada}"
+				selection="#{dtTableStateView.personaSeleccionada}"
 				selectionMode="single" paginator="true" rows="10"
 				paginatorPosition="bottom"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+				rowsPerPageTemplate="5,10,15"
 				currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records">
 
 				<f:facet name="header">
@@ -90,6 +91,11 @@
 							onkeyup="PF('personasDataTable1').filter()" style="width:150px"
 							placeholder="Ingrese un valor" />
 					</p:outputPanel>
+				</f:facet>
+				
+				<f:facet name="paginatorTopLeft">
+					<p:commandButton value="Actualizar tabla"
+						action="#{dtTableStateView.clearTableState}" update="@form" />
 				</f:facet>
 
 				<f:facet name="{Exporters}">
@@ -211,7 +217,6 @@
 				</p:column>
 
 				<p:ajax event="rowEdit" listener="#{personaBean.editListener}" />
-
 			</p:dataTable>
 			<!-- Fin Listar Personas -->
 	

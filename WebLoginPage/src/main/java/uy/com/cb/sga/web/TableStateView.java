@@ -5,22 +5,28 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.PrimeFaces;
 
 import uy.com.cb.sga.domain.Persona;
 import uy.com.cb.sga.servicio.PersonaService;
 
-@Named("dtFilterView")
-@ViewScoped
-public class FilterView implements Serializable {
+@Named("dtTableStateView")
+@SessionScoped
+public class TableStateView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private List<Persona> personas;
 
-	private List<Persona> filteredPersons1;
+	private List<Persona> filteredPersons;
+	
+	private Persona personaSeleccionada;
 
 	@Inject
 	private PersonaService personaService;
@@ -28,7 +34,7 @@ public class FilterView implements Serializable {
 	@PostConstruct
 	public void inicializar() {
 		// Iniciamos las variables
-		personaService.listarPersonas();
+		personas = personaService.listarPersonas();
 	}
 
 	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
@@ -39,12 +45,13 @@ public class FilterView implements Serializable {
 		int filterInt = getInteger(filterText);
 
 		Persona persona = (Persona) value;
-		return persona.getIdPersona() < filterInt
+		return persona.getIdPersona().toString().contains(filterText)
 				|| persona.getNombre().toLowerCase().contains(filterText) 
 				|| persona.getApellido().toLowerCase().contains(filterText) 
 				|| persona.getEmail().toLowerCase().contains(filterText)
 				|| persona.getTelefono().toLowerCase().contains(filterText)
-				|| persona.getFecha().toString().contains(filterText);
+				|| persona.getFecha().toString().contains(filterText)
+				|| persona.getIdPersona() < filterInt;
 	}
 
 	private int getInteger(String string) {
@@ -64,17 +71,36 @@ public class FilterView implements Serializable {
 		this.personas = personas;
 	}
 
-	public List<Persona> getFilteredPersons1() {
-		return filteredPersons1;
+	public List<Persona> getFilteredPersons() {
+		return filteredPersons;
 	}
 
-	public void setFilteredPersons1(List<Persona> filteredPersons1) {
-		this.filteredPersons1 = filteredPersons1;
+	public void setFilteredPersons(List<Persona> filteredPersons) {
+		this.filteredPersons = filteredPersons;
+	}
+	
+	public Persona getPersonaSeleccionada() {
+		return personaSeleccionada;
+	}
+
+	public void setPersonaSeleccionada(Persona personaSeleccionada) {
+		this.personaSeleccionada = personaSeleccionada;
 	}
 
 	public void setPersonaService(PersonaService personaService) {
 		this.personaService = personaService;
 	}
+	
+	public void clearTableState() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String viewId = context.getViewRoot().getViewId();
+		PrimeFaces.current().multiViewState().clearAll(viewId, true, (clientId) -> {
+			showMessage(clientId);
+		});
+	}
 
+	private void showMessage(String clientId) {
+		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, clientId + " multiview state has been cleared out", null));
+	}
 
 }
