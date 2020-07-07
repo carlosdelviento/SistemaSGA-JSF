@@ -25,35 +25,35 @@
 		    <p:menubar>
 		        <p:submenu label="Archivo" icon="pi pi-file">
 		            <p:submenu label="Nuevo" icon="pi pi-briefcase">
-		                <p:menuitem value="Proyecto" url="#" />
-		                <p:menuitem value="Otros" url="#" />
+		                <p:menuitem value="Proyecto" url="#"/>
+		                <p:menuitem value="Otros" url="#"/>
 		            </p:submenu>
-		            <p:menuitem value="Abrir" url="#" />
-		            <p:separator />
-		            <p:menuitem value="Salir" action="#{loginBean.logout()}" />
+		            <p:menuitem value="Abrir" url="#"/>
+		            <p:separator/>
+		            <p:menuitem value="Salir" action="#{loginBean.logout()}"/>
 		        </p:submenu>
 		 
 		        <p:submenu label="Editar" icon="pi pi-pencil">
-		            <p:menuitem value="Deshacer" url="#" icon="pi pi-angle-double-left" />
-		            <p:menuitem value="Rehacer" url="#" icon="pi pi-angle-double-right" />
+		            <p:menuitem value="Deshacer" url="#" icon="pi pi-angle-double-left"/>
+		            <p:menuitem value="Rehacer" url="#" icon="pi pi-angle-double-right"/>
 		        </p:submenu>
 		 
 		        <p:submenu label="Ayuda" icon="pi pi-question">
-		            <p:menuitem value="Contenido" url="#" />
+		            <p:menuitem value="Contenido" url="#"/>
 		            <p:submenu label="Buscar" icon="pi pi-search">
 		                <p:submenu label="Texto">
-		                    <p:menuitem value="Workspace" url="#" />
+		                    <p:menuitem value="Workspace" url="#"/>
 		                </p:submenu>
-		                <p:menuitem value="Archivo" url="#" />
+		                <p:menuitem value="Archivo" url="#"/>
 		            </p:submenu>
 		        </p:submenu>
 		 
 		        <p:submenu label="Acciones"  for="personasDataTable" icon="pi pi-cog">
-		                <p:menuitem value="Agregar" actionListener="#{personaBean.agregarPersona}" update="personasListForm:personasDataTable" oncomplete="PF('personaDialog').show()" icon="pi pi-save" />
+		                <p:menuitem value="Agregar" actionListener="#{personaBean.agregarPersona}" update="personasListForm:personasDataTable" oncomplete="PF('personaDialog').show()" icon="pi pi-save"/>
 		                <p:menuitem value="Borrar" actionListener="#{personaBean.eliminarPersona}" update="personasListForm:personasDataTable" icon="pi pi-times"/>
 		        </p:submenu>
 		        
-		        <p:menuitem value="Salir" icon="pi pi-times" action="#{loginBean.logout()}" />
+		        <p:menuitem value="Salir" icon="pi pi-times" action="#{loginBean.logout()}"/>
 		    </p:menubar>
 		</h:form>
 	</div>
@@ -62,8 +62,8 @@
 	<!-- DataTable -->
 	<div id="content" class="center_content">
 		<h:form id="personasListForm">
-			<p:growl id="messages" showDetail="true" />
-			<p:messages />
+			<p:growl id="messages" showDetail="true"/>
+			<p:messages id="messages" />
 	
 			<!-- Tabla Listar personas -->
 			<p:dataTable var="persona" value="#{personaBean.personas}"
@@ -89,53 +89,57 @@
 						<h:outputText value="Buscar persona:" />
 						<p:inputText id="globalFilter"
 							onkeyup="PF('personasDataTable1').filter()" style="width:150px"
-							placeholder="Ingrese un valor" />
+							placeholder="Ingrese un valor"/>
 					</p:outputPanel>
 				</f:facet>
 				
+				<p:ajax event="rowEdit" listener="#{personaBean.editListener}"/>
+				
+				<!-- <p:ajax event="rowSelect" update=":dialogForm1:personaDetail" oncomplete="PF('personaSeleccionada').show()" /> -->
+				
 				<f:facet name="paginatorTopLeft">
 					<p:commandButton value="Actualizar tabla"
-						action="#{dtTableStateView.clearTableState}" update="@form" />
+						action="#{dtTableStateView.clearTableState}" update="@personasListForm"/>
 				</f:facet>
 
 				<f:facet name="{Exporters}">
 					<div style="float: right; padding-top: 5px;">
 						<h:commandLink>
-							<p:graphicImage library="images" name="excel.png" width="24" />
+							<p:graphicImage library="images" name="excel.png" width="24"/>
 							<p:dataExporter type="xls" target="personasDataTable"
-								fileName="persons" pageOnly="true" />
+								fileName="persons" pageOnly="true"/>
 						</h:commandLink>
 
 						<h:commandLink>
-							<p:graphicImage library="images" name="xlsx.png" width="24" />
+							<p:graphicImage library="images" name="xlsx.png" width="24"/>
 							<p:dataExporter type="xlsxstream" target="personasDataTable"
-								fileName="persons" pageOnly="true" />
+								fileName="persons" pageOnly="true"/>
 						</h:commandLink>
 
 						<h:commandLink>|
-							<p:graphicImage library="images" name="pdf.png" width="24" />
+							<p:graphicImage library="images" name="pdf.png" width="24"/>
 							<p:dataExporter type="pdf" target="personasDataTable"
-								fileName="persons" pageOnly="true" />
+								fileName="persons" pageOnly="true"/>
 						</h:commandLink>
 
 						<h:commandLink>
-							<p:graphicImage library="images" name="csv.png" width="24" />
+							<p:graphicImage library="images" name="csv.png" width="24"/>
 							<p:dataExporter type="csv" target="personasDataTable"
-								fileName="persons" pageOnly="true" />
+								fileName="persons" pageOnly="true"/>
 						</h:commandLink>
 
 						<h:commandLink>
-							<p:graphicImage library="images" name="xml.png" width="24" />
+							<p:graphicImage library="images" name="xml.png" width="24"/>
 							<p:dataExporter type="xml" target="personasDataTable"
-								fileName="persons" pageOnly="true" />
+								fileName="persons" pageOnly="true"/>
 						</h:commandLink>
 
 						<h:commandLink>
 							<p:graphicImage library="images" name="keyboardpencil.png"
-								width="24" />
+								width="24"/>
 							<p:dataExporter type="text" target="personasDataTable"
 								fileName="persons" exporter="#{dataExporterView.textExporter}"
-								pageOnly="true" />
+								pageOnly="true"/>
 						</h:commandLink>
 					</div>
 				</f:facet>
@@ -153,7 +157,7 @@
 							<h:outputText value="#{persona.nombre}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{persona.nombre}" />
+							<p:inputText value="#{persona.nombre}"/>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -166,7 +170,7 @@
 							<h:outputText value="#{persona.apellido}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{persona.apellido}" />
+							<p:inputText value="#{persona.apellido}"/>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -179,7 +183,7 @@
 							<h:outputText value="#{persona.email}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{persona.email}" />
+							<p:inputText value="#{persona.email}"/>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -192,7 +196,7 @@
 							<h:outputText value="#{persona.telefono}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{persona.telefono}" />
+							<p:inputText value="#{persona.telefono}"/>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -216,13 +220,13 @@
 					<p:rowEditor />
 				</p:column>
 
-				<p:ajax event="rowEdit" listener="#{personaBean.editListener}" />
 			</p:dataTable>
 			<!-- Fin Listar Personas -->
 	
 			<p:contextMenu for="personasDataTable">
-				<p:menuitem value="Ver" update="personasListForm:personasDataTable" icon="pi pi-search" oncomplete="PF('personaSeleccionada').show()" />
-				<p:menuitem value="Eliminar" update="personasListForm:personasDataTable" icon="pi pi-times" actionListener="#{personaBean.eliminarPersona}" />
+				<!-- <p:menuitem value="Ver" update="personasListForm:personasDataTable" icon="pi pi-search" oncomplete="PF('personaSeleccionada').show()"/> -->
+				<p:menuitem value="Ver" update="personaDetail" icon="pi pi-search" oncomplete="PF('personaSeleccionada').show()"/>
+				<p:menuitem value="Eliminar" update="personasDataTable" icon="pi pi-times" action="#{personaBean.eliminarPersona}"/>
 			</p:contextMenu>
 
 	</h:form>
@@ -254,7 +258,7 @@
 					</h:inputText>
 
 					<f:facet name="footer">
-						<p:commandButton value="Agregar" actionListener="#{personaBean.agregarPersona}" update="display,:personasListForm:personasDataTable" oncomplete="PF('personaDialog').hide();" />
+						<p:commandButton value="Agregar" actionListener="#{personaBean.agregarPersona}" update="display,:personasListForm:personasDataTable" oncomplete="PF('personaDialog').hide();"/>
 					</f:facet>
 				</p:panelGrid>
 			</p:outputPanel>
@@ -268,7 +272,7 @@
 			<p:outputPanel id="personaDetail" style="text-align:center;">
 				<p:panelGrid id="display" columns="2" rendered="#{not empty personaBean.personaSeleccionada}" columnClasses="label,value">
 					<f:facet name="header">
-						<p:graphicImage library="images" name="user.png" />
+						<p:graphicImage library="images" name="user.png"/>
 					</f:facet>
 					
 					<h:outputText for="Id" value="Id" />

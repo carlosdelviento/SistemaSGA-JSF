@@ -2,9 +2,6 @@ package uy.com.cb.sga.web;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;

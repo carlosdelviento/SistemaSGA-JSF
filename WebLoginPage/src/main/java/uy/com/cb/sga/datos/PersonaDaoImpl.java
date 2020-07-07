@@ -3,7 +3,6 @@ package uy.com.cb.sga.datos;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.*;
-
 import uy.com.cb.sga.domain.Persona;
 
 @Stateless 
@@ -14,7 +13,7 @@ public class PersonaDaoImpl implements PersonaDao{
 
     @Override
     public List<Persona> findAllPersonas() {
-        return em.createNamedQuery("Persona.findAll").getResultList();
+        return em.createNamedQuery("Persona.findAll",Persona.class).getResultList();
     }
 
     @Override

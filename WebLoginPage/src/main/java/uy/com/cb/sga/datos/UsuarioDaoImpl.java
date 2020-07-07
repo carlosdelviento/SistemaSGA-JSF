@@ -13,8 +13,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 
     @Override
     public List<Usuario> findAllUsuarios() {
-    	//return em.createNamedQuery("Usuario.findAll").getResultList();
-        return em.createQuery("usuario.findall", Usuario.class).getResultList();
+    	return em.createNamedQuery("Usuario.findAll",Usuario.class).getResultList();
     }
 
     @Override
@@ -31,7 +30,9 @@ public class UsuarioDaoImpl implements UsuarioDao{
     
     public Usuario findUsuarioByUsername(String username) {
         Query query = em.createNamedQuery("Usuario.findByUsername", Usuario.class).setParameter("username", username);
-		List<Usuario> listado=query.getResultList();
+	
+        @SuppressWarnings("unchecked")
+        List<Usuario> listado=query.getResultList();
         
         if(!listado.isEmpty()){
         	return listado.get(0);
