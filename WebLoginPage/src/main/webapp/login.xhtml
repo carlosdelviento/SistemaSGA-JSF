@@ -10,6 +10,7 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js">
 	</script>
 	<!-- Personalize Css -->
+	<h:outputStylesheet library="primefaces" name="primeicons/primeicons.css" />
 	<h:outputStylesheet library="css" name="login.css" />
 
 </h:head>
@@ -17,18 +18,18 @@
 	<div class="container">
 		<h:form id="formLogin">
 			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-			<p:panel header="Login" widgetVar="dlg" resizable="false">
-				<h:panelGrid columns="2" cellpadding="5">
-					<h:outputLabel for="username" value="Username:" />
-					<p:inputText style="width: 100%;" id="username" value="#{loginBean.username}" required="true" label="Usuario" />
-					<p:message for="username" display="icon" />
+			<p:panel header="Login Sistema" widgetVar="dlg" resizable="false">
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:outputLabel for="username" value="Usuario" />
+					<p:inputText id="username" value="#{loginBean.username}" required="true" label="Usuario"/>
+					<p:message for="username" display="icon"/>
 
-					<h:outputLabel for="password" value="Password:" />
-					<p:password style="width: 100%;" id="password" value="#{loginBean.password}" required="true" label="Clave" />
-					<p:message for="password" display="icon" />
+					<p:outputLabel for="password" value="Clave:"/>
+					<p:password id="password" value="#{loginBean.password}" required="true" label="Clave"/>
+					<p:message for="password" display="icon"/>
 
 					<f:facet name="footer">
-						<p:commandButton id="loginButton" value="Login" update="growl" action="#{loginBean.autenticar()}" oncomplete="handleLoginRequest(xhr, status, args)" icon="pi pi-sign-in" />
+						<p:commandButton id="loginButton" value="Iniciar Sesión" update="growl" action="#{loginBean.autenticar()}" oncomplete="handleLoginRequest(xhr, status, args)" icon="pi pi-sign-in" />
 					</f:facet>
 				</h:panelGrid>
 			</p:panel>

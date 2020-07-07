@@ -13,8 +13,8 @@ public class UsuarioDaoImpl implements UsuarioDao{
 
     @Override
     public List<Usuario> findAllUsuarios() {
-    	return em.createNamedQuery("Usuario.findAll").getResultList();
-        //return em.createQuery("usuario.findall", Usuario.class).getResultList();
+    	//return em.createNamedQuery("Usuario.findAll").getResultList();
+        return em.createQuery("usuario.findall", Usuario.class).getResultList();
     }
 
     @Override

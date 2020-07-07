@@ -2,6 +2,9 @@ package uy.com.cb.sga.web;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -40,46 +43,46 @@ public class PersonaBean implements Serializable {
 
 	@PostConstruct
 	public void inicializar() {
-		// Iniciamos las variables
-		this.personas = personaService.listarPersonas();
-		log.debug("personas recuperadas en ManagedBean:" + this.personas);
-		this.personaSeleccionada = new Persona();
-		
-		model = new DefaultMenuModel();
-		//First submenu
-        DefaultSubMenu firstSubmenu = DefaultSubMenu.builder()
-                .label("Dynamic Submenu")
-                .build();
- 
-        DefaultMenuItem item = DefaultMenuItem.builder()
-                .value("External")
-                .url("http://www.primefaces.org")
-                .icon("pi pi-home")
-                .build();
-        firstSubmenu.getElements().add(item);
- 
-        model.getElements().add(firstSubmenu);
- 
-        //Second submenu
-        DefaultSubMenu secondSubmenu = DefaultSubMenu.builder()
-                .label("Dynamic Actions")
-                .build();
- 
-        item = DefaultMenuItem.builder()
-                .value("Guardar")
-                .icon("pi pi-save")
-                .command("#{personaBean.agregarPersona()}")
-                .update("messages")
-                .build();
-        secondSubmenu.getElements().add(item);
- 
-        item = DefaultMenuItem.builder()
-                .value("Borrar")
-                .icon("pi pi-times")
-                .command("#{personaBean.eliminarPersona()}")
-                .ajax(false)
-                .build();
-        secondSubmenu.getElements().add(item);
+	    // Iniciamos las variables
+	    this.personas = personaService.listarPersonas();
+	    log.debug("personas recuperadas en ManagedBean:" + this.personas);
+	    this.personaSeleccionada = new Persona();
+
+	    model = new DefaultMenuModel();
+	    //First submenu
+	    DefaultSubMenu firstSubmenu = DefaultSubMenu.builder()
+		    .label("Dynamic Submenu")
+		    .build();
+
+	    DefaultMenuItem item = DefaultMenuItem.builder()
+		    .value("External")
+		    .url("http://www.primefaces.org")
+		    .icon("pi pi-home")
+		    .build();
+	    firstSubmenu.getElements().add(item);
+
+	    model.getElements().add(firstSubmenu);
+
+	    //Second submenu
+	    DefaultSubMenu secondSubmenu = DefaultSubMenu.builder()
+		    .label("Dynamic Actions")
+		    .build();
+
+	    item = DefaultMenuItem.builder()
+		    .value("Guardar")
+		    .icon("pi pi-save")
+		    .command("#{personaBean.agregarPersona()}")
+		    .update("messages")
+		    .build();
+	    secondSubmenu.getElements().add(item);
+
+	    item = DefaultMenuItem.builder()
+		    .value("Borrar")
+		    .icon("pi pi-times")
+		    .command("#{personaBean.eliminarPersona()}")
+		    .ajax(false)
+		    .build();
+	    secondSubmenu.getElements().add(item);
 	}
 
 	public MenuModel getModel() {

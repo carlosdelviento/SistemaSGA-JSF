@@ -56,26 +56,30 @@ public class LoginBean implements Serializable {
 	}
 	
 	public String autenticar() {
-        boolean loggedIn = false;
+	    FacesMessage message = null;
+	    boolean loggedIn = false;
 
+	    try {
 		usuarioAutenticado = usuDao.findUsuarioByUsername(username);
-
 		if (usuarioAutenticado != null) {
-			if (usuarioAutenticado.getPassword().equals(password)) {
-				loggedIn = true;
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Bienvenido", username));
-				return "ingresar";
-			}
-			loggedIn = false;
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"La clave no corresponde", password));
-			PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
-			return null;
+		    if (usuarioAutenticado.getPassword().equals(password)) {
+			loggedIn = true;
+			message = new FacesMessage(FacesMessage.SEVERITY_INFO,"Bienvenido", username);
+			return "ingresar";
+		    }
+		    loggedIn = false;
+		    message = new FacesMessage(FacesMessage.SEVERITY_WARN,"La clave no corresponde", password);
+		    return null;
 		}
 		loggedIn = false;
-		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_FATAL, "El usuario no existe", "El usuario no existe"));
-		PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
+		message = new FacesMessage(FacesMessage.SEVERITY_FATAL, "El usuario no existe", "El usuario no existe");
 		return null;
-		
+	    } catch (Exception e) {
+		message = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al ingresar al sistema", "No se puede ingresar en este momento");
+	    }
+	    FacesContext.getCurrentInstance().addMessage(null, message);
+	    PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
+	    return null;
 	}
 	
 	public String logout(){
