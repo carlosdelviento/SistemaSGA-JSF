@@ -122,14 +122,14 @@ public class PersonaBean implements Serializable {
 	}
 
 	public void eliminarPersona() {
-		personaService.eliminarPersona(personaSeleccionada);
-		personas.remove(personaSeleccionada);
-		personaSeleccionada = null;
+		this.personaService.eliminarPersona(personaSeleccionada);
+		this.personas.remove(this.personaSeleccionada);
+		this.personaSeleccionada = null;
 		addMessage("Hecho", "Dato eliminado");
 	}
 
 	public void reiniciarPersonaSeleccionada() {
-		personaSeleccionada = new Persona();
+		this.personaSeleccionada = new Persona();
 		addMessage("Hecho", "Dato actualizado");
 	}
 }

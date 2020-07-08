@@ -50,7 +50,7 @@
 		 
 		        <p:submenu label="Acciones"  for="personasDataTable" icon="pi pi-cog">
 		                <p:menuitem value="Agregar" actionListener="#{personaBean.agregarPersona}" update="personasListForm:personasDataTable" oncomplete="PF('personaDialog').show()" icon="pi pi-save"/>
-		                <p:menuitem value="Borrar" actionListener="#{personaBean.eliminarPersona}" update="personasListForm:personasDataTable" icon="pi pi-times"/>
+		                <p:menuitem value="Borrar" actionListener="#{personaBean.eliminarPersona}" update=":personasListForm:messages" icon="pi pi-times"/>
 		        </p:submenu>
 		        
 		        <p:menuitem value="Salir" icon="pi pi-times" action="#{loginBean.logout()}"/>
@@ -63,7 +63,6 @@
 	<div id="content" class="center_content">
 		<h:form id="personasListForm">
 			<p:growl id="messages" showDetail="true"/>
-			<p:messages id="messages" />
 	
 			<!-- Tabla Listar personas -->
 			<p:dataTable var="persona" value="#{personaBean.personas}"
@@ -98,8 +97,7 @@
 				<!-- <p:ajax event="rowSelect" update=":dialogForm1:personaDetail" oncomplete="PF('personaSeleccionada').show()" /> -->
 				
 				<f:facet name="paginatorTopLeft">
-					<p:commandButton value="Actualizar tabla"
-						action="#{dtTableStateView.clearTableState}" update="@personasListForm"/>
+					<p:commandButton type="button" action="#{dtTableStateView.clearTableState}" update="@personasListForm" icon="pi pi-cloud-upload" />
 				</f:facet>
 
 				<f:facet name="{Exporters}">
@@ -225,8 +223,8 @@
 	
 			<p:contextMenu for="personasDataTable">
 				<!-- <p:menuitem value="Ver" update="personasListForm:personasDataTable" icon="pi pi-search" oncomplete="PF('personaSeleccionada').show()"/> -->
-				<p:menuitem value="Ver" update="personaDetail" icon="pi pi-search" oncomplete="PF('personaSeleccionada').show()"/>
-				<p:menuitem value="Eliminar" update="personasDataTable" icon="pi pi-times" action="#{personaBean.eliminarPersona}"/>
+				<p:menuitem value="Ver" update="dialogForm1:personaDetail" icon="pi pi-search" oncomplete="PF('personaSeleccionada').show()" />
+				<p:menuitem value="Eliminar" update="personasListForm:personasDataTable" icon="pi pi-times" actionListener="#{personaBean.eliminarPersona}" />
 			</p:contextMenu>
 
 	</h:form>
@@ -234,7 +232,7 @@
 	<!-- Agregar persona Menú -->
 	<p:dialog id="personaDlg" widgetVar="personaDialog" header="Agregar Persona" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 		<h:form id="dialogForm">
-			<p:outputPanel id="personaDetail" style="text-align: center;">
+			<p:outputPanel id="personaAdd" style="text-align: center;">
 				<p:panelGrid id="display" columns="4" columnClasses="label,value">
 				
 					<h:outputText for="nombre" value="Nombre" />
@@ -258,7 +256,7 @@
 					</h:inputText>
 
 					<f:facet name="footer">
-						<p:commandButton value="Agregar" actionListener="#{personaBean.agregarPersona}" update="display,:personasListForm:personasDataTable" oncomplete="PF('personaDialog').hide();"/>
+						<p:commandButton value="Agregar" actionListener="#{personaBean.agregarPersona}" update="display,:personasListForm:personasDataTable" oncomplete="PF('personaDialog').hide();" />
 					</f:facet>
 				</p:panelGrid>
 			</p:outputPanel>
