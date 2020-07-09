@@ -31,7 +31,7 @@ public class PersonaBean implements Serializable {
 	private Persona personaSeleccionada;
 
 	List<Persona> personas;
-	
+
 	private MenuModel model;
 
 	public PersonaBean() {
@@ -40,57 +40,53 @@ public class PersonaBean implements Serializable {
 
 	@PostConstruct
 	public void inicializar() {
-	    // Iniciamos las variables
-	    this.personas = personaService.listarPersonas();
-	    log.debug("personas recuperadas en ManagedBean:" + this.personas);
-	    this.personaSeleccionada = new Persona();
+		// Iniciamos las variables
+		this.personas = personaService.listarPersonas();
+		log.debug("personas recuperadas en ManagedBean:" + this.personas);
+		this.personaSeleccionada = new Persona();
 
-	    model = new DefaultMenuModel();
-	    //First submenu
-	    DefaultSubMenu firstSubmenu = DefaultSubMenu.builder()
-		    .label("Dynamic Submenu")
-		    .build();
+		model = new DefaultMenuModel();
+		//First submenu
+		DefaultSubMenu firstSubmenu = DefaultSubMenu.builder()
+				.label("Dynamic Submenu")
+				.build();
 
-	    DefaultMenuItem item = DefaultMenuItem.builder()
-		    .value("External")
-		    .url("http://www.primefaces.org")
-		    .icon("pi pi-home")
-		    .build();
-	    firstSubmenu.getElements().add(item);
+		DefaultMenuItem item = DefaultMenuItem.builder()
+				.value("External")
+				.url("http://www.primefaces.org")
+				.icon("pi pi-home")
+				.build();
+		firstSubmenu.getElements().add(item);
 
-	    model.getElements().add(firstSubmenu);
+		model.getElements().add(firstSubmenu);
 
-	    //Second submenu
-	    DefaultSubMenu secondSubmenu = DefaultSubMenu.builder()
-		    .label("Dynamic Actions")
-		    .build();
+		//Second submenu
+		DefaultSubMenu secondSubmenu = DefaultSubMenu.builder()
+				.label("Dynamic Actions")
+				.build();
 
-	    item = DefaultMenuItem.builder()
-		    .value("Guardar")
-		    .icon("pi pi-save")
-		    .command("#{personaBean.agregarPersona()}")
-		    .update("messages")
-		    .build();
-	    secondSubmenu.getElements().add(item);
+		item = DefaultMenuItem.builder()
+				.value("Guardar")
+				.icon("pi pi-save")
+				.command("#{personaBean.agregarPersona()}")
+				.update("messages")
+				.build();
+		secondSubmenu.getElements().add(item);
 
-	    item = DefaultMenuItem.builder()
-		    .value("Borrar")
-		    .icon("pi pi-times")
-		    .command("#{personaBean.eliminarPersona()}")
-		    .ajax(false)
-		    .build();
-	    secondSubmenu.getElements().add(item);
+		item = DefaultMenuItem.builder()
+				.value("Borrar")
+				.icon("pi pi-times")
+				.command("#{personaBean.eliminarPersona()}")
+				.ajax(false)
+				.build();
+		secondSubmenu.getElements().add(item);
 	}
 
 	public MenuModel getModel() {
-        return model;
-    }
- 
-    public void addMessage(String summary, String detail) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-    
+		return model;
+	}
+
+
 	@SuppressWarnings("rawtypes")
 	public void editListener(RowEditEvent event) {
 		Persona persona = (Persona) event.getObject();
@@ -125,11 +121,16 @@ public class PersonaBean implements Serializable {
 		this.personaService.eliminarPersona(personaSeleccionada);
 		this.personas.remove(this.personaSeleccionada);
 		this.personaSeleccionada = null;
-		addMessage("Hecho", "Dato eliminado");
+		addMessage("Hecho", "Persona eliminada");
 	}
 
 	public void reiniciarPersonaSeleccionada() {
 		this.personaSeleccionada = new Persona();
 		addMessage("Hecho", "Dato actualizado");
+	}
+
+	public void addMessage(String summary, String detail) {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 }

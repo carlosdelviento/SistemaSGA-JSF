@@ -100,7 +100,7 @@ public class TableStateView implements Serializable {
 	}
 
 	private void showMessage(String clientId) {
-		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, clientId + " multiview state has been cleared out", null));
+		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, clientId + " Se limpió el estado de la tabla", null));
 	}
 
 }

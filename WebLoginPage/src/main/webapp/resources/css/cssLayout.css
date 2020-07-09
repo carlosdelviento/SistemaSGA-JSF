@@ -95,7 +95,7 @@
 }
 
 .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
-	visibility: hidden;
+	display: none;
 }
 
 .ui-filter-column .ui-column-customfilter .custom-filter {

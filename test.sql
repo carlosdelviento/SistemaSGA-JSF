@@ -11,7 +11,7 @@ USE `test`;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40103 SET TIME_ZONE='+03:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
@@ -25,15 +25,15 @@ DROP TABLE IF EXISTS `persona`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `persona` (
-    `id_persona` INT(4) NOT NULL AUTO_INCREMENT,
-    `nombre` VARCHAR(45) NOT NULL,
-    `apellido` VARCHAR(45) NOT NULL,
-    `email` VARCHAR(45) NOT NULL,
-    `telefono` VARCHAR(45) NOT NULL,
-    `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    `id_persona` int NOT NULL AUTO_INCREMENT,
+    `nombre` varchar(45) NOT NULL,
+    `apellido` varchar(45) NOT NULL,
+    `email` varchar(45) NOT NULL,
+    `telefono` varchar(45) NOT NULL,
+    `fecha` timestamp default current_timestamp on update current_timestamp NOT NULL,
     PRIMARY KEY (`id_persona`),
     UNIQUE KEY `email_UNIQUE` (`email`)
-)  ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_0900_AI_CI;
+)  ENGINE=INNODB AUTO_INCREMENT=21 DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_0900_AI_CI;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,16 +74,14 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
-    `id_usuario` INT(4) NOT NULL AUTO_INCREMENT,
-    `id_persona` INT(4),
-    `username` VARCHAR(45) NOT NULL,
-    `password` VARCHAR(45) NOT NULL,
+    `id_usuario` int NOT NULL AUTO_INCREMENT,
+    `id_persona` int DEFAULT NULL,
+    `username` varchar(45) NOT NULL,
+    `password` varchar(45) NOT NULL,
     PRIMARY KEY (`id_usuario`),
     KEY `fk_usuario_persona_idx` (`id_persona`),
-    CONSTRAINT `fk_usuario_persona` FOREIGN KEY (`id_persona`)
-        REFERENCES `persona` (`id_persona`)
-        ON DELETE SET NULL
-)  ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_0900_AI_CI;
+    CONSTRAINT `fk_usuario_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON DELETE SET NULL
+)  ENGINE=INNODB AUTO_INCREMENT=4 DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_0900_AI_CI;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +90,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `test`.`usuario` VALUES ('1','1','jperez','123'),('2','2','kgomez','123'),('3','3','admin','admin123');
+INSERT INTO `test`.`usuario` (`id_usuario`,`id_persona`,`username`, `password`) VALUES ('1','1','jperez','123'),('2','2','kgomez','123'),('3','3','mgutierrez','mgutierrez123');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -8,62 +8,81 @@
 <h:head>
 	<title>Listado de Personas</title>
 	<!-- Personalize Css -->
-	<h:outputStylesheet library="primefaces" name="primeicons/primeicons.css" />
+	<h:outputStylesheet library="primefaces"
+		name="primeicons/primeicons.css" />
 	<h:outputStylesheet library="css" name="cssLayout.css" />
 </h:head>
 <h:body>
-	
+
 	<!-- Header -->
 	<div id="top" class="ui-widget-header ui-corner-all">
 		<ui:insert name="top">Top</ui:insert>
 	</div>
 	<!-- Fin Header -->
-	
+
 	<!-- Menubar -->
 	<div id="menu">
-		<h:form>  	 
-		    <p:menubar>
-		        <p:submenu label="Archivo" icon="pi pi-file">
-		            <p:submenu label="Nuevo" icon="pi pi-briefcase">
-		                <p:menuitem value="Proyecto" url="#"/>
-		                <p:menuitem value="Otros" url="#"/>
-		            </p:submenu>
-		            <p:menuitem value="Abrir" url="#"/>
-		            <p:separator/>
-		            <p:menuitem value="Salir" action="#{loginBean.logout()}"/>
-		        </p:submenu>
-		 
-		        <p:submenu label="Editar" icon="pi pi-pencil">
-		            <p:menuitem value="Deshacer" url="#" icon="pi pi-angle-double-left"/>
-		            <p:menuitem value="Rehacer" url="#" icon="pi pi-angle-double-right"/>
-		        </p:submenu>
-		 
-		        <p:submenu label="Ayuda" icon="pi pi-question">
-		            <p:menuitem value="Contenido" url="#"/>
-		            <p:submenu label="Buscar" icon="pi pi-search">
-		                <p:submenu label="Texto">
-		                    <p:menuitem value="Workspace" url="#"/>
-		                </p:submenu>
-		                <p:menuitem value="Archivo" url="#"/>
-		            </p:submenu>
-		        </p:submenu>
-		 
-		        <p:submenu label="Acciones"  for="personasDataTable" icon="pi pi-cog">
-		                <p:menuitem value="Agregar" actionListener="#{personaBean.agregarPersona}" update="personasListForm:personasDataTable" oncomplete="PF('personaDialog').show()" icon="pi pi-save"/>
-		                <p:menuitem value="Borrar" actionListener="#{personaBean.eliminarPersona}" update=":personasListForm:messages" icon="pi pi-times"/>
-		        </p:submenu>
-		        
-		        <p:menuitem value="Salir" icon="pi pi-times" action="#{loginBean.logout()}"/>
-		    </p:menubar>
+		<h:form>
+			<p:menubar>
+				<p:submenu label="Archivo" icon="pi pi-file">
+					<p:submenu label="Nuevo" icon="pi pi-briefcase">
+						<p:menuitem value="Proyecto" url="#" />
+						<p:menuitem value="Otros" url="#" />
+					</p:submenu>
+					<p:menuitem value="Abrir" url="#" />
+					<p:separator />
+					<p:menuitem value="Salir" action="#{loginBean.logout()}" />
+				</p:submenu>
+
+				<p:submenu label="Editar" icon="pi pi-pencil">
+					<p:menuitem value="Deshacer" url="#" icon="pi pi-angle-double-left" />
+					<p:menuitem value="Rehacer" url="#" icon="pi pi-angle-double-right" />
+				</p:submenu>
+
+				<p:submenu label="Ayuda" icon="pi pi-question">
+					<p:menuitem value="Contenido" url="#" />
+					<p:submenu label="Buscar" icon="pi pi-search">
+						<p:submenu label="Texto">
+							<p:menuitem value="Workspace" url="#" />
+						</p:submenu>
+						<p:menuitem value="Archivo" url="#" />
+					</p:submenu>
+				</p:submenu>
+
+				<p:submenu label="Acciones" for="personasDataTable" icon="pi pi-cog">
+					<p:menuitem value="Agregar"
+						actionListener="#{personaBean.reiniciarPersonaSeleccionada}"
+						update=":dialogForm" oncomplete="PF('personaDialog').show()"
+						icon="pi pi-save" />
+					<p:menuitem value="Borrar"
+						actionListener="#{personaBean.eliminarPersona}"
+						update="personasListForm:messages" icon="pi pi-times" />
+				</p:submenu>
+
+				<p:menuitem value="Salir" icon="pi pi-times"
+					action="#{loginBean.logout()}" />
+			</p:menubar>
 		</h:form>
 	</div>
 	<!-- Fin Menubar -->
-	
+
 	<!-- DataTable -->
 	<div id="content" class="center_content">
+		<p:ajaxStatus style="width: 16px;height: 16px;" id="ajaxStatusPanel">
+			<f:facet name="start">
+				<h:graphicImage library="images" name="ajaxloading.gif" />
+			</f:facet>
+
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+
+		</p:ajaxStatus>
+
 		<h:form id="personasListForm">
-			<p:growl id="messages" showDetail="true"/>
-	
+			<p:growl id="messages" showDetail="true" />
+			<p:messages />
+
 			<!-- Tabla Listar personas -->
 			<p:dataTable var="persona" value="#{personaBean.personas}"
 				widgetVar="personasDataTable1" multiViewState="true"
@@ -72,7 +91,7 @@
 				id="personasDataTable" stickyHeader="false"
 				stickyTopAt=".layout-topbar" editable="true"
 				rowKey="#{persona.idPersona}"
-				selection="#{dtTableStateView.personaSeleccionada}"
+				selection="#{personaBean.personaSeleccionada}"
 				selectionMode="single" paginator="true" rows="10"
 				paginatorPosition="bottom"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
@@ -88,121 +107,82 @@
 						<h:outputText value="Buscar persona:" />
 						<p:inputText id="globalFilter"
 							onkeyup="PF('personasDataTable1').filter()" style="width:150px"
-							placeholder="Ingrese un valor"/>
+							placeholder="Ingrese un valor" />
 					</p:outputPanel>
-				</f:facet>
-				
-				<p:ajax event="rowEdit" listener="#{personaBean.editListener}"/>
-				
-				<!-- <p:ajax event="rowSelect" update=":dialogForm1:personaDetail" oncomplete="PF('personaSeleccionada').show()" /> -->
-				
-				<f:facet name="paginatorTopLeft">
-					<p:commandButton type="button" action="#{dtTableStateView.clearTableState}" update="@personasListForm" icon="pi pi-cloud-upload" />
-				</f:facet>
-
-				<f:facet name="{Exporters}">
-					<div style="float: right; padding-top: 5px;">
-						<h:commandLink>
-							<p:graphicImage library="images" name="excel.png" width="24"/>
-							<p:dataExporter type="xls" target="personasDataTable"
-								fileName="persons" pageOnly="true"/>
-						</h:commandLink>
-
-						<h:commandLink>
-							<p:graphicImage library="images" name="xlsx.png" width="24"/>
-							<p:dataExporter type="xlsxstream" target="personasDataTable"
-								fileName="persons" pageOnly="true"/>
-						</h:commandLink>
-
-						<h:commandLink>|
-							<p:graphicImage library="images" name="pdf.png" width="24"/>
-							<p:dataExporter type="pdf" target="personasDataTable"
-								fileName="persons" pageOnly="true"/>
-						</h:commandLink>
-
-						<h:commandLink>
-							<p:graphicImage library="images" name="csv.png" width="24"/>
-							<p:dataExporter type="csv" target="personasDataTable"
-								fileName="persons" pageOnly="true"/>
-						</h:commandLink>
-
-						<h:commandLink>
-							<p:graphicImage library="images" name="xml.png" width="24"/>
-							<p:dataExporter type="xml" target="personasDataTable"
-								fileName="persons" pageOnly="true"/>
-						</h:commandLink>
-
-						<h:commandLink>
-							<p:graphicImage library="images" name="keyboardpencil.png"
-								width="24"/>
-							<p:dataExporter type="text" target="personasDataTable"
-								fileName="persons" exporter="#{dataExporterView.textExporter}"
-								pageOnly="true"/>
-						</h:commandLink>
-					</div>
 				</f:facet>
 
 				<p:column headerText="Id" sortBy="#{persona.idPersona}"
-					footerText="contains" filterMatchMode="contains">
-					<h:outputText value="#{persona.idPersona}" />
+					filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{persona.idPersona}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{persona.idPersona}" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
 
 				<p:column headerText="Nombre" sortBy="#{persona.nombre}"
-					filterBy="#{persona.nombre}" footerText="contains"
-					filterMatchMode="contains">
+					filterBy="#{persona.nombre}" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.nombre}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{persona.nombre}"/>
+							<p:inputText value="#{persona.nombre}" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
 
 				<p:column headerText="Apellido" sortBy="#{persona.apellido}"
-					filterBy="#{persona.apellido}" footerText="contains"
-					filterMatchMode="contains">
+					filterBy="#{persona.apellido}" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.apellido}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{persona.apellido}"/>
+							<p:inputText value="#{persona.apellido}" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
 
 				<p:column headerText="Email" sortBy="#{persona.email}"
-					filterBy="#{persona.email}" footerText="contains"
-					filterMatchMode="contains">
+					filterBy="#{persona.email}" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.email}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{persona.email}"/>
+							<p:inputText value="#{persona.email}" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
 
 				<p:column headerText="Telefono" sortBy="#{persona.telefono}"
-					filterBy="#{persona.telefono}" footerText="contains"
-					filterMatchMode="contains">
+					filterBy="#{persona.telefono}" filterMatchMode="contains">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{persona.telefono}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{persona.telefono}"/>
+							<p:inputText value="#{persona.telefono}" />
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Fecha" sortBy="#{persona.fecha}">
-					<h:outputText value="#{persona.fecha}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
+				<p:column headerText="Fecha" sortBy="#{persona.fecha}"
+					filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{persona.fecha}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{persona.fecha}" readonly="true"/>
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
 
 				<p:column headerText="Ver" style="width:32px;text-align: center">
@@ -218,88 +198,160 @@
 					<p:rowEditor />
 				</p:column>
 
+				<p:ajax event="rowEdit" listener="#{personaBean.editListener}"
+					update="personasListForm:messages" />
+
+				<!-- Exportar tabla -->
+				<f:facet name="{Exporters}">
+					<div style="float: right; padding-top: 5px;">
+						<h:commandLink>
+							<p:graphicImage library="images" name="excel.png" width="24" />
+							<p:dataExporter type="xls" target="personasDataTable"
+								fileName="ListadoPersonas" encoding="UTF-8" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage library="images" name="xlsx.png" width="24" />
+							<p:dataExporter type="xlsxstream" target="personasDataTable"
+								fileName="ListadoPersonas" encoding="UTF-8" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage library="images" name="pdf.png" width="24" />
+							<p:dataExporter type="pdf" target="personasDataTable"
+								fileName="ListadoPersonas" encoding="UTF-8" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage library="images" name="csv.png" width="24" />
+							<p:dataExporter type="csv" target="personasDataTable"
+								fileName="ListadoPersonas" encoding="UTF-8" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage library="images" name="xml.png" width="24" />
+							<p:dataExporter type="xml" target="personasDataTable"
+								fileName="ListadoPersonas" encoding="UTF-8" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage library="images" name="keyboardpencil.png"
+								width="24" />
+							<p:dataExporter type="text" target="personasDataTable"
+								fileName="ListadoPersonas" exporter="#{dataExporterView.textExporter}"
+								encoding="UTF-8" />
+						</h:commandLink>
+					</div>
+				</f:facet>
+				<!-- Fin Exportar Tabla -->
+				<f:facet name="paginatorTopLeft">
+					<p:commandButton value="Limpiar estado de Tabla" actionListener="#{dtTableStateView.clearTableState}"
+						update=":personasListForm:personasDataTable" />
+				</f:facet>
 			</p:dataTable>
 			<!-- Fin Listar Personas -->
-	
+
 			<p:contextMenu for="personasDataTable">
-				<!-- <p:menuitem value="Ver" update="personasListForm:personasDataTable" icon="pi pi-search" oncomplete="PF('personaSeleccionada').show()"/> -->
-				<p:menuitem value="Ver" update="dialogForm1:personaDetail" icon="pi pi-search" oncomplete="PF('personaSeleccionada').show()" />
-				<p:menuitem value="Eliminar" update="personasListForm:personasDataTable" icon="pi pi-times" actionListener="#{personaBean.eliminarPersona}" />
+				<p:menuitem value="Ver" update="personasListForm:personasDataTable"
+					icon="pi pi-search" oncomplete="PF('personaSeleccionada').show()" />
+				<p:menuitem value="Eliminar"
+					update="personasListForm:personasDataTable" icon="pi pi-times"
+					actionListener="#{personaBean.eliminarPersona}" />
 			</p:contextMenu>
 
-	</h:form>
+		</h:form>
 
-	<!-- Agregar persona Menú -->
-	<p:dialog id="personaDlg" widgetVar="personaDialog" header="Agregar Persona" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-		<h:form id="dialogForm">
-			<p:outputPanel id="personaAdd" style="text-align: center;">
-				<p:panelGrid id="display" columns="4" columnClasses="label,value">
-				
-					<h:outputText for="nombre" value="Nombre" />
-					<h:inputText style="#{ component.valid ? 'border-color:red;' : 'border-color:red;'}" value="#{personaBean.personaSeleccionada.nombre}" label="Nombre" required="true">
-						<f:validateLength minimum="2" />
-					</h:inputText>
-					
-					<h:outputText for="apellido" value="Apellido" />
-					<h:inputText style="#{ component.valid ? 'border-color:red;' : 'border-color:red;'}" value="#{personaBean.personaSeleccionada.apellido}" label="Apellido" required="true">
-						<f:validateLength minimum="2" />
-					</h:inputText>
+		<!-- Agregar persona Menú -->
+		<p:dialog id="personaDlg" widgetVar="personaDialog"
+			header="Agregar Persona" modal="true" showEffect="fade"
+			hideEffect="fade" resizable="false">
+			<h:form id="dialogForm">
+				<p:outputPanel id="personaAdd" style="text-align: center">
+					<p:panelGrid id="display" columns="4" columnClasses="label,value">
+						<h:outputText value="Nombre" />
+						<h:inputText value="#{personaBean.personaSeleccionada.nombre}"
+							label="Nombre" required="true"
+							style="#{ component.valid ? 'border-color:red;' : 'border-color:black;'}">
+							<f:validateLength minimum="2" />
+							<f:validateRegex pattern="^[a-zA-Z]+$" />
+						</h:inputText>
 
-					<h:outputText for="email" value="Email" />
-					<h:inputText style="#{ component.valid ? 'border-color:red;' : 'border-color:red;'}" value="#{personaBean.personaSeleccionada.email}" label="Email" required="true">
-						<f:validateLength minimum="6" />
-					</h:inputText>
-					
-					<h:outputText for="email" value="Telefono" />
-					<h:inputText style="#{ component.valid ? 'border-color:red;' : 'border-color:red;'}" value="#{personaBean.personaSeleccionada.telefono}" label="Telefono" required="true">
+						<h:outputText value="Apellido" />
+						<h:inputText value="#{personaBean.personaSeleccionada.apellido}"
+							label="Apellido" required="true"
+							style="#{ component.valid ? 'border-color:red;' : 'border-color:black;'}">
+							<f:validateLength minimum="2" />
+							<f:validateRegex pattern="^[a-zA-Z]+$" />
+						</h:inputText>
+
+						<h:outputText value="Email" />
+						<h:inputText value="#{personaBean.personaSeleccionada.email}"
+							label="Email" required="true"
+							style="#{ component.valid ? 'border-color:red;' : 'border-color:black;'}">
+							<f:validateLength minimum="6" />
+							<f:validateRegex
+								pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+						</h:inputText>
+
+						<h:outputText value="Telefono" />
+						<h:inputText value="#{personaBean.personaSeleccionada.telefono}"
+							label="Telefono" required="true"
+							style="#{ component.valid ? 'border-color:red;' : 'border-color:black;'}">
 							<f:validateLength minimum="8" />
-					</h:inputText>
+							<f:validateRegex pattern="^[0-9]+$" />
+						</h:inputText>
 
-					<f:facet name="footer">
-						<p:commandButton value="Agregar" actionListener="#{personaBean.agregarPersona}" update="display,:personasListForm:personasDataTable" oncomplete="PF('personaDialog').hide();" />
-					</f:facet>
-				</p:panelGrid>
-			</p:outputPanel>
-		</h:form>
-	</p:dialog>
-	<!-- Fin Agregar persona Menú -->
-	
-	<!-- Ver persona Menú -->
-	<p:dialog widgetVar="personaSeleccionada" header="Ver persona" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-		<h:form id="dialogForm1">
-			<p:outputPanel id="personaDetail" style="text-align:center;">
-				<p:panelGrid id="display" columns="2" rendered="#{not empty personaBean.personaSeleccionada}" columnClasses="label,value">
-					<f:facet name="header">
-						<p:graphicImage library="images" name="user.png"/>
-					</f:facet>
-					
-					<h:outputText for="Id" value="Id" />
-					<h:outputText value="#{personaBean.personaSeleccionada.idPersona}" />
-					
-					<h:outputText for="nombre" value="Nombre" />
-					<h:outputText value="#{personaBean.personaSeleccionada.nombre}" />
+						<f:facet name="footer">
+							<p:commandButton value="Agregar"
+								actionListener="#{personaBean.agregarPersona}"
+								update="display,personasListForm:personasDataTable"
+								oncomplete="PF('personaDialog').hide()" />
+						</f:facet>
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<!-- Fin Agregar persona Menú -->
 
-					<h:outputText for="apellido" value="Apellido" />
-					<h:outputText value="#{personaBean.personaSeleccionada.apellido}" />
+		<!-- Ver persona Menú -->
+		<p:dialog header="Ver persona" widgetVar="personaSeleccionada"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+			<h:form id="dialogForm1">
+				<p:outputPanel id="personaDetail" style="text-align:center;">
+					<p:panelGrid id="display" columns="2"
+						rendered="#{not empty personaBean.personaSeleccionada}"
+						columnClasses="label,value">
+						<f:facet name="header">
+							<p:graphicImage library="images" name="user.png" />
+						</f:facet>
 
-					<h:outputText for="email" value="Email" />
-					<h:outputText value="#{personaBean.personaSeleccionada.email}" />
+						<h:outputText value="Id" />
+						<h:outputText value="#{personaBean.personaSeleccionada.idPersona}" />
 
-					<h:outputText for="telefono" value="Telefono" />
-					<h:outputText value="#{personaBean.personaSeleccionada.telefono}" />
-				</p:panelGrid>
-			</p:outputPanel>
-		</h:form>
-	</p:dialog>
-	<!-- Fin Ver persona Menú -->
+						<h:outputText value="Nombre" />
+						<h:outputText value="#{personaBean.personaSeleccionada.nombre}" />
+
+						<h:outputText value="Apellido" />
+						<h:outputText value="#{personaBean.personaSeleccionada.apellido}" />
+
+						<h:outputText value="Email" />
+						<h:outputText value="#{personaBean.personaSeleccionada.email}" />
+
+						<h:outputText value="Telefono" />
+						<h:outputText value="#{personaBean.personaSeleccionada.telefono}" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<!-- Fin Ver persona Menú -->
 	</div>
-	<!-- Fin DataTable -->	
-	
+	<!-- Fin DataTable -->
+
 	<!-- Footer -->
 	<div id="bottom" class="ui-widget-header ui-corner-all">
 		<ui:insert name="bottom"> 2020</ui:insert>
 	</div>
 	<!-- Fin Footer -->
-	
+
 </h:body>
 </html>

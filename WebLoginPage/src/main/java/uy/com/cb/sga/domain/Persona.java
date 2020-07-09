@@ -25,7 +25,7 @@ public class Persona implements Serializable {
 	@Column(name="id_persona")
 	private Integer idPersona;
     @Size(max = 45)
-    private String nombre;
+	private String nombre;
     @Size(max = 45)
     private String apellido;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
@@ -33,7 +33,7 @@ public class Persona implements Serializable {
     private String email;
     @Size(max = 45)
     private String telefono;
-    
+    @Version
     private Timestamp fecha;
 
 	@OneToMany(mappedBy = "persona" , cascade = CascadeType.ALL)
@@ -131,7 +131,7 @@ public class Persona implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Persona [idPersona=" + idPersona + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email
+		return "Persona[idPersona=" + idPersona + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email
 				+ ", telefono=" + telefono + ", fecha" + fecha + "]";
 	}
 }
