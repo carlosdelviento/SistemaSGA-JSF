@@ -1,3 +1,4 @@
+//For mysql
 user=root
 password=admin
 databaseName=test
@@ -6,4 +7,15 @@ datasourceName=com.mysql.cj.jdbc.MysqlDataSource
 portNumber=3306
 useSSL=false
 useTimezone=true
+allowPublicKeyRetrieval=true
+connectionTimeout=20000
 serverTimezone=UTC
+
+//For Db2
+user=root
+password=admin
+databaseName="databaseName"
+serverName="serverName"
+datasourceName=com.ibm.db2.jcc.DB2ConnectionPoolDataSource
+portNumber="portNumber"
+driverType=4

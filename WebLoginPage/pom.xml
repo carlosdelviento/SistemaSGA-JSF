@@ -26,21 +26,25 @@
 
 	<!-- JSF Dependency -->
 	<dependencies>
+	 <!-- Option 1: Use if deploying to a Java EE application server (GlassFish, JBoss AS, etc) -->
 		<dependency>
 			<groupId>javax.faces</groupId>
 			<artifactId>jsf-api</artifactId>
 			<version>2.1</version>
 			<scope>provided</scope>
 		</dependency>
+		 <!-- Option 2: Use if deploying to a servlet container (Tomcat, Jetty, etc) -->
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
 			<version>2.2.14</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
 			<version>2.2.14</version>
+		 	<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -85,19 +89,36 @@
 			<artifactId>javax.persistence-api</artifactId>
 			<version>2.2</version>
 		</dependency>
+		
+		<!-- Eclipse Link -->
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>eclipselink</artifactId>
 			<version>2.5.2</version>
 		</dependency>
 
+		<!-- Hibernate Core -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.4.18.Final</version>
+		</dependency>
+
+		<!-- Hibernate EntityManager -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.4.18.Final</version>
+		</dependency>
+		
+		
 		<!-- MySQL Connector -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.20</version>
 		</dependency>
-		
+
 		<!-- Log4j2 -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -110,49 +131,50 @@
 			<version>2.12.0</version>
 		</dependency>
 
-	<!-- DataTable Exporter -->
-	<dependency>
-		<groupId>com.lowagie</groupId>
-		<artifactId>itext</artifactId>
-		<version>2.1.7</version>
-	</dependency>
+		<!-- DataTable Exporter -->
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+		</dependency>
 
-	<dependency>
-		<groupId>org.apache.poi</groupId>
-		<artifactId>poi</artifactId>
-		<version>3.17</version>
-	</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.17</version>
+		</dependency>
 
-	<dependency>
-		<groupId>org.apache.poi</groupId>
-		<artifactId>poi-ooxml</artifactId>
-		<version>4.0.0</version>
-	</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.0.0</version>
+		</dependency>
 
-	<dependency>
-		<groupId>org.lucee</groupId>
-		<artifactId>poi-ooxml</artifactId>
-		<version>3.15.0</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>org.apache.xmlbeans</groupId>
-		<artifactId>xmlbeans</artifactId>
-		<version>2.5.0</version>
-	</dependency>
+		<dependency>
+			<groupId>org.lucee</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.15.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<version>2.5.0</version>
+		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.6.2</version>
+					<version>3.8.1</version>
 					<configuration>
 						<!-- Java version -->
 						<source>1.8</source>
 						<target>1.8</target>
+					 	<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
 				<plugin>

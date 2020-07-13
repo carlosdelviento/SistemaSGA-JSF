@@ -99,7 +99,8 @@ public class PersonaBean implements Serializable {
 
 	public void setPersonaSeleccionada(Persona personaSeleccionada) {
 		this.personaSeleccionada = personaSeleccionada;
-		addMessage("Hecho", "Dato actualizado");
+		addMessage("Hecho", "Persona modificada");
+
 	}
 
 	public List<Persona> getPersonas() {
@@ -114,7 +115,7 @@ public class PersonaBean implements Serializable {
 		this.personaService.registrarPersona(personaSeleccionada);
 		this.personas.add(personaSeleccionada);
 		this.personaSeleccionada = null;
-		addMessage("Hecho", "Persona agregada con éxito");
+		addMessage("Hecho", "Persona agregada");
 	}
 
 	public void eliminarPersona() {
@@ -126,7 +127,6 @@ public class PersonaBean implements Serializable {
 
 	public void reiniciarPersonaSeleccionada() {
 		this.personaSeleccionada = new Persona();
-		addMessage("Hecho", "Dato actualizado");
 	}
 
 	public void addMessage(String summary, String detail) {
