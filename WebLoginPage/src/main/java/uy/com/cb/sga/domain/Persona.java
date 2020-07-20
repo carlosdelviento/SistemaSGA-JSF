@@ -5,6 +5,10 @@ import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @NamedQueries({
@@ -15,7 +19,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Persona.findByEmail", query = "SELECT p FROM Persona p WHERE p.email = :email"),
     @NamedQuery(name = "Persona.findByTelefono", query = "SELECT p FROM Persona p WHERE p.telefono = :telefono"),
     @NamedQuery(name = "Persona.findByFecha", query = "SELECT p FROM Persona p WHERE p.fecha = :fecha")})
-
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -36,6 +41,7 @@ public class Persona implements Serializable {
     @Version
     private Timestamp fecha;
 
+    @XmlTransient
 	@OneToMany(mappedBy = "persona" , cascade = CascadeType.ALL)
 	private List<Usuario> usuarioList;
 

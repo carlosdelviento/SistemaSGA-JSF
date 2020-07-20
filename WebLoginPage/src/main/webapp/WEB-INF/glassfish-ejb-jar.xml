@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE glassfish-ejb-jar PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Servlet 3.0//EN" "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
+<glassfish-ejb-jar>
+	<enterprise-beans>
+		<ejb>
+			<ejb-name>PersonaServiceImpl</ejb-name>
+			<webservice-endpoint>
+				<port-component-name>PersonaServiceImpl</port-component-name>
+				<login-config>
+					<auth-method>BASIC</auth-method>
+				</login-config>
+			</webservice-endpoint>
+		</ejb>
+	</enterprise-beans>
+</glassfish-ejb-jar>
